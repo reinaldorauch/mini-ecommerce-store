@@ -6,11 +6,7 @@ interface CartIdStore {
 
 export const useCartIdStore = defineStore("cartId", {
   state: (): CartIdStore => {
-    let cartId = null;
-    // if (typeof window !== "undefined") {
-    //   cartId = localStorage?.getItem("cartId");
-    // }
-    return { cartId };
+    return { cartId: null };
   },
   getters: {
     param({ cartId }): { cartId: string } | {} {
@@ -29,15 +25,5 @@ export const useCartIdStore = defineStore("cartId", {
       this.cartId = id;
     },
   },
+  persist: true,
 });
-
-const store = useCartIdStore();
-
-store.$subscribe(
-  (_, { cartId }) => {
-    // if (typeof window !== "undefined" && cartId) {
-    //   localStorage?.setItem("cartId", cartId);
-    // }
-  },
-  { detached: true }
-);

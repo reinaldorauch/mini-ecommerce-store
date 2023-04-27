@@ -13,6 +13,9 @@ const { data: cart, pending, error, refresh } = useLazyAsyncData(
   })
     .catch((err) => {
       if (err.status === 404) {
+        if (cartIdStore.cartId) {
+          cartIdStore.$reset();
+        }
         return [];
       } else {
         throw err;
@@ -27,6 +30,7 @@ async function removeItem({id, quantity}: CartItem): Promise<void> {
     baseURL: config.public.apiBase, 
     body: JSON.stringify({cartId, id, quantity: quantity * -1 })
   })
+  refreshNuxtData('cart');
 }
 </script>
 
