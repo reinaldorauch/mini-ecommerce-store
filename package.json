@@ -17,7 +17,9 @@
     "vue": "latest"
   },
   "dependencies": {
+    "@element-plus/nuxt": "^1.0.4",
     "@pinia/nuxt": "^0.4.9",
+    "element-plus": "^2.3.4",
     "pinia": "^2.0.35"
   }
 }

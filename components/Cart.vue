@@ -4,6 +4,7 @@ interface CartItem {
   id: string
   quantity: number
 }
+const props = defineProps(['index']);
 const config = useRuntimeConfig();
 const cartIdStore = useCartIdStore();
 const { data: cart, pending, error, refresh } = useLazyAsyncData(
@@ -35,17 +36,10 @@ async function removeItem({id, quantity}: CartItem): Promise<void> {
 </script>
 
 <template>
-  <div>
-    <p>CartId: {{ cartIdStore.cartId }}</p>
-    <p v-if="error"><pre>{{ error }}</pre></p>
-    <p>Carrinho: {{ pending ? '...' : cart?.length }}</p>
-    <div v-if="cart">
-      <ul>
-        <li v-for="i of cart">
-          <span>{{ i.id }} - {{ i.quantity }}</span>
-          <button @click="removeItem(i)">Remover</button>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <el-sub-menu :index="props.index">
+    <template #title>Carrinho</template>
+    <el-menu-item v-if="cart" v-for="i of cart">
+      <span>{{ i.id }} - {{ i.quantity }}</span>
+    </el-menu-item>
+  </el-sub-menu>
 </template>
