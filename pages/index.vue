@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { VERTICAL } from 'element-plus/es/components/virtual-list/src/defaults';
 import { useSearchStore } from '../stores/search';
 
 const config = useRuntimeConfig();
-const route = useRoute();
 const skip = useState<number>(() => 0);
 const take = useState<number>(() => 10);
 const searchStore = useSearchStore();
