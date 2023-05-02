@@ -30,7 +30,7 @@ const { data: prods, pending, error } =
         <el-card  v-for="p in (prods.data)" :key="p._id" :body-style="{ padding: '0px' }" :style="{width: '300px'}">
           <NuxtLink :href="'/product/' + p._id">
             <img
-            :src="p.images[0]"
+            :src="p.images[0] ?? '/sem_imagem.png'"
             class="image"
             />
             <div style="padding: 14px">
@@ -51,6 +51,7 @@ const { data: prods, pending, error } =
 <style>
 .product-list {
   margin-bottom: 20px;
+  gap: 15px;
 }
 .bottom {
   margin-top: 13px;
