@@ -12,7 +12,6 @@ export const useSearchStore = defineStore("search", {
   actions: {
     doSearch(search: string) {
       this.search = search;
-      refreshNuxtData("prod-list");
     },
   },
 });

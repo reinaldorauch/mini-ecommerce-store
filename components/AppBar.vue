@@ -6,6 +6,7 @@ const router = useRouter();
 const search = ref('');
 let loadedFromUrl = false;
 const selectedPath = ref('/');
+const openCart = ref(false);
 
 const searchStore = useSearchStore();
 
@@ -52,9 +53,12 @@ watchEffect(() => {
           </el-form-item>
         </el-form>
         <el-menu-item index="/product">Produtos</el-menu-item>
-        <Cart index="cart"/>
+        <el-menu-item @click="openCart = true">Carrinho</el-menu-item>
       </el-menu>
     </el-header>
+    <el-drawer direction="rtl" v-model="openCart">
+      <Cart />
+    </el-drawer>
   </el-container>
 </template>
 
