@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {useCartIdStore} from '../../stores/cart-id';
+import {useCartStore} from '../../stores/cart';
 const route = useRoute()
 const config = useRuntimeConfig();
-const cartIdStore = useCartIdStore();
+const cartStore = useCartStore();
 const commonConfig = {
   baseURL: config.public.apiBase
 };
@@ -20,12 +20,12 @@ async function addToCart(prod: Product) {
     body: JSON.stringify({
       id: prod._id,
       quantity: 1,
-      ...cartIdStore.param
+      ...cartStore.param
     })
   });
 
   if (res?.cartId) {
-    cartIdStore.setCartId(res.cartId);
+    cartStore.setCartId(res.cartId);
   }
 
   refreshNuxtData('cart');

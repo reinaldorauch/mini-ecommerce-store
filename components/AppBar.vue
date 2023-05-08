@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { useSearchStore } from '../stores/search';
+import { useCartStore } from '../stores/cart';
+import { Close } from '@element-plus/icons-vue';
 
 const route = useRoute();
 const router = useRouter();
 const search = ref('');
 let loadedFromUrl = false;
 const selectedPath = ref('/');
-const showCart = ref(false);
 
+const cartStore = useCartStore();
 const searchStore = useSearchStore();
 
 function handleSubmit(ev: Event) {
@@ -36,6 +38,14 @@ watchEffect(() => {
 async function onMenuSelect(index: string) {
   await router.push(index);
 }
+
+function clearSearch(ev: Event) {
+  const oldSearch = search.value;
+  search.value = ''
+  if (searchStore.search === oldSearch) {
+    handleSubmit(ev);
+  }
+}
 </script>
 
 <template>
@@ -51,18 +61,19 @@ async function onMenuSelect(index: string) {
         <div class="spacer"></div>
         <el-form :inline="true" class="app-bar-form" @submit="handleSubmit">
           <el-form-item class="app-bar-form-item">
-            <el-input v-model="search" placeholder="Busca" @keydown="onInputKeyDown"></el-input>
+            <el-input v-model="search" placeholder="Busca" @keydown="onInputKeyDown">
+              <template v-if="search" #append>
+                <el-button @click="clearSearch" :icon="Close"></el-button>
+              </template>
+            </el-input>
           </el-form-item>
           <el-form-item  class="app-bar-form-item">
             <el-button type="primary" @click="handleSubmit">Buscar</el-button>
           </el-form-item>
         </el-form>
-        <el-menu-item @click="showCart = true">Carrinho</el-menu-item>
+        <el-menu-item @click="() => cartStore.showCart()">Carrinho</el-menu-item>
       </el-menu>
     </el-header>
-    <el-drawer direction="rtl" v-model="showCart">
-      <Cart />
-    </el-drawer>
   </el-container>
 </template>
 

@@ -1,12 +1,13 @@
 import { defineStore } from "pinia";
 
-interface CartIdStore {
+interface CartStore {
   cartId: null | string;
+  cartOpen: boolean;
 }
 
-export const useCartIdStore = defineStore("cartId", {
-  state: (): CartIdStore => {
-    return { cartId: null };
+export const useCartStore = defineStore("cart", {
+  state: (): CartStore => {
+    return { cartId: null, cartOpen: false };
   },
   getters: {
     param({ cartId }): { cartId: string } | {} {
@@ -23,6 +24,12 @@ export const useCartIdStore = defineStore("cartId", {
   actions: {
     setCartId(id: string) {
       this.cartId = id;
+    },
+    showCart() {
+      this.cartOpen = true;
+    },
+    hideCart() {
+      this.cartOpen = false;
     },
   },
   persist: true,

@@ -1,11 +1,23 @@
+<script setup>
+import { useCartStore } from './stores/cart';
+
+const cartStore = useCartStore();
+</script>
+
 <template>
   <div>
     <AppBar/>
     <el-container>
       <el-main>
         <NuxtPage/>
+        <ClientOnly>
+          <el-drawer direction="rtl" v-model="cartStore.cartOpen">
+            <Cart />
+          </el-drawer>
+        </ClientOnly>
       </el-main>
     </el-container>
+    
   </div>
 </template>
 
