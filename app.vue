@@ -6,10 +6,10 @@ const cartStore = useCartStore();
 
 <template>
   <div>
-    <AppBar/>
+    <AppBar />
     <el-container>
       <el-main>
-        <NuxtPage/>
+        <NuxtPage />
         <ClientOnly>
           <el-drawer direction="rtl" v-model="cartStore.cartOpen">
             <Cart />
@@ -17,7 +17,7 @@ const cartStore = useCartStore();
         </ClientOnly>
       </el-main>
     </el-container>
-    
+
   </div>
 </template>
 
@@ -29,6 +29,6 @@ body {
 
 * {
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
-  'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
 }
 </style>

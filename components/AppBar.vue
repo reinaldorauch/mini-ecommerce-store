@@ -51,12 +51,7 @@ function clearSearch(ev: Event) {
 <template>
   <el-container>
     <el-header>
-      <el-menu 
-        :default-active="selectedPath"
-        mode="horizontal"
-        :ellipsis="false"
-        @select="onMenuSelect"
-      >
+      <el-menu :default-active="selectedPath" mode="horizontal" :ellipsis="false" @select="onMenuSelect">
         <el-menu-item index="/">mini ecommerce</el-menu-item>
         <div class="spacer"></div>
         <el-form :inline="true" class="app-bar-form" @submit="handleSubmit">
@@ -67,7 +62,7 @@ function clearSearch(ev: Event) {
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item  class="app-bar-form-item">
+          <el-form-item class="app-bar-form-item">
             <el-button type="primary" @click="handleSubmit">Buscar</el-button>
           </el-form-item>
         </el-form>
@@ -81,10 +76,12 @@ function clearSearch(ev: Event) {
 .spacer {
   flex-grow: 1;
 }
+
 .app-bar-form {
   display: flex;
   align-items: center;
 }
+
 .app-bar-form-item {
   margin-bottom: 0;
 }
