@@ -6,7 +6,7 @@ const router = useRouter();
 const search = ref('');
 let loadedFromUrl = false;
 const selectedPath = ref('/');
-const openCart = ref(false);
+const showCart = ref(false);
 
 const searchStore = useSearchStore();
 
@@ -32,6 +32,10 @@ watchEffect(() => {
     loadedFromUrl = true;
   }
 })
+
+async function onMenuSelect(index: string) {
+  await router.push(index);
+}
 </script>
 
 <template>
@@ -41,6 +45,7 @@ watchEffect(() => {
         :default-active="selectedPath"
         mode="horizontal"
         :ellipsis="false"
+        @select="onMenuSelect"
       >
         <el-menu-item index="/">mini ecommerce</el-menu-item>
         <div class="spacer"></div>
@@ -52,11 +57,10 @@ watchEffect(() => {
             <el-button type="primary" @click="handleSubmit">Buscar</el-button>
           </el-form-item>
         </el-form>
-        <el-menu-item index="/product">Produtos</el-menu-item>
-        <el-menu-item @click="openCart = true">Carrinho</el-menu-item>
+        <el-menu-item @click="showCart = true">Carrinho</el-menu-item>
       </el-menu>
     </el-header>
-    <el-drawer direction="rtl" v-model="openCart">
+    <el-drawer direction="rtl" v-model="showCart">
       <Cart />
     </el-drawer>
   </el-container>

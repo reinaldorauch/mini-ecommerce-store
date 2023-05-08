@@ -28,15 +28,26 @@ const { data: prods, pending, error } =
     
     <div v-if="prods">
       <el-container class="product-list">
-        <el-card  v-for="p in (prods.data)" :key="p._id" :body-style="{ padding: '0px' }" :style="{width: '298px'}">
-          <NuxtLink :href="'/product/' + p._id">
-            <img
-            :src="p.images[0] ?? '/sem_imagem.png'"
-            class="image"
-            />
+        <el-card 
+          v-for="p in (prods.data)" 
+          :key="p._id"
+          class="d-flex f-column"
+          :body-style="{ padding: '0px' }"
+          :style="{width: '298px'}"
+        >
+          <NuxtLink 
+            class="d-flex f-column no-decoration"
+            :href="'/product/' + p._id"
+          >
+            <div class="d-flex f-grow f-column f-jc-center bc-black">
+              <img
+                class="image"
+                :src="p.images[0] ?? '/sem_imagem.png'"
+                />
+            </div>
             <div style="padding: 14px">
               <el-badge :value="p.itemsInStock">
-                <el-button>{{ p.title }}</el-button>
+                <el-text style="margin: 5px" size="large" truncated>{{ p.title }}</el-text>
               </el-badge>
               <div class="bottom">
                 <Price :price="p.price" />
@@ -53,11 +64,19 @@ const { data: prods, pending, error } =
 </template>
 
 <style>
+.el-card__body {
+  display: flex;
+  flex-grow: 1;
+}
+</style>
+
+<style scoped>
 .product-list {
   margin-bottom: 20px;
   gap: 15px;
   flex-wrap: wrap;
 }
+
 .bottom {
   margin-top: 13px;
   line-height: 12px;
@@ -71,8 +90,37 @@ const { data: prods, pending, error } =
   min-height: auto;
 }
 
+.d-flex {
+  display: flex;
+}
+
+.f-column {
+  flex-direction: column;
+}
+
+.f-grow {
+  flex-grow: 1;
+}
+
+.f-jc-center {
+  justify-content: center;
+}
+
+.f-j-space-between {
+  justify-content: space-between;
+}
+
+.bc-black {
+  background-color: black;
+}
+
 .image {
   width: 100%;
   display: block;
+}
+
+.no-decoration {
+  text-decoration: none;
+  color: inherit;
 }
 </style>
