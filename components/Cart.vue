@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { TableColumnCtx } from 'element-plus';
 import { useCartStore } from '../stores/cart';
 import { Close } from '@element-plus/icons-vue';
 
 interface CartItem {
   id: string
   title: string
+  price: number
   quantity: number
 }
 
@@ -46,15 +48,42 @@ async function onQtyChange(item: CartItem, current?: number, old?: number) {
 
   await change(item, current - old);
 }
+
+interface SummaryMethodProps<T = CartItem> {
+  columns: TableColumnCtx<T>[]
+  data: T[]
+}
+
+const formatter = new Intl.NumberFormat('pt-br', { currency: 'BRL', style: 'currency' });
+
+const sumCart = (param: SummaryMethodProps) => {
+  return param.columns.map((column, index) => {
+    if (index === 0) return 'Total';
+
+    if (index === 2) {
+      return formatter.format(param.data.reduce((sum, row) => sum + (Number(row.price) * row.quantity), 0));
+    }
+
+    const values = param.data.map(r => Number(r[column.property as keyof CartItem]));
+
+    if (values.every(v => Number.isNaN(v))) return '';
+
+    return values.reduce((sum, v) => sum + v, 0).toString();
+  })
+}
 </script>
 
 <template>
-  <h3>Carrinho</h3>
-  <el-table v-loading="pending" v-if="cart" :data="cart">
+  <el-table v-loading="pending" v-if="cart" :data="cart" show-summary :summary-method="sumCart">
     <el-table-column prop="title" label="Produto" />
     <el-table-column prop="quantity" label="Qtd.">
       <template #default="scope">
         <el-input-number v-model="scope.row.quantity" @change="(c, o) => onQtyChange(scope.row, c, o)" />
+      </template>
+    </el-table-column>
+    <el-table-column prop="price" label="R$">
+      <template #default="scope">
+        <Price :cents="false" :price="Number(scope.row.price) * Number(scope.row.quantity)" />
       </template>
     </el-table-column>
     <el-table-column label="Opções">

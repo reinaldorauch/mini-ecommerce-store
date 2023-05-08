@@ -11,7 +11,7 @@ const cartStore = useCartStore();
       <el-main>
         <NuxtPage />
         <ClientOnly>
-          <el-drawer direction="rtl" v-model="cartStore.cartOpen">
+          <el-drawer direction="rtl" v-model="cartStore.cartOpen" size="700px" title="Carrinho">
             <Cart />
           </el-drawer>
         </ClientOnly>
