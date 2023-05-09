@@ -41,10 +41,18 @@ async function addToCart(prod: Product) {
   </div>
   <div v-if="prod">
     <h1>Produto: {{ prod.title }}</h1>
+    <div style="display: flex; gap: 10px">
+      <div v-for="i of prod.images" style="background-color: black; display: flex; align-items: center;">
+        <img style="max-width: 300px;" :src="i" alt="{{ prod.title }}">
+      </div>
+    </div>
     <p>
-      <img style="max-width: 300px;" v-for="[index, i] of prod.images.entries()" :key="index" :src="i"
-        alt="{{ prod.title }}">
+      <strong>Preço: </strong>
+      <Price :cents='true' :price='prod.price' />
     </p>
-    <p><button @click="addToCart(prod)">Adicionar ao carrinho</button></p>
+    <p>
+      Itens em estoque: {{ prod.itemsInStock }}
+    </p>
+    <p><el-button type="primary" @click="addToCart(prod)">Adicionar ao carrinho</el-button></p>
   </div>
 </template>
